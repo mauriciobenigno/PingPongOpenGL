@@ -1,0 +1,146 @@
+/*GLint //pegando a parte inteira da bibliot do glglut-open gl --sao numeros inteiros
+
+void init (void) // para trabalhar as cores
+
+void display
+//o que vai mostrar na tela
+//vai criar uma borda
+glBeginWidht // linha da tela
+
+glpoint(15.0);//um ponto -- bolinha que vai ficar mexendo
+
+// -->  teclado (o que esta implementado) //quando clicar uma tecla qualquer vai clicar sai
+*/
+
+
+//#include <windows.h>
+#include <GL/glut.h>
+#include <iostream>
+#include <cstdlib>
+#include <stdio.h>
+#include <string>
+#include <cmath>
+#include <sstream> 
+
+GLint movebola=0;
+GLint direcao=1, mouse=0;
+GLint velocidade = 2;
+
+GLint largura = 300;
+GLint altura = 100;
+
+GLint moveRaqDir = 0; //move A raquete direita
+GLint moveRaqEsq = 0; // move A raquete Esquerda
+
+GLint pos_bola_x = largura/2;
+GLint pos_bola_y = altura/2;
+
+GLint dir_bola_x = -2;
+
+GLint pontuacao_esq = 0;
+GLint pontucao_dir = 0;
+
+
+
+void init(void){
+glClearColor(0.0, 0.0, 0.0, 0.0);
+glOrtho (0, 600, 0, 400, -1 ,1);
+}
+
+
+
+void display(void){
+glClear(GL_COLOR_BUFFER_BIT);
+
+glColor3f(1.0, 0.0, 0.0);
+glLineWidth(15.0);
+glBegin(GL_LINE_LOOP);
+glVertex2i(2,2); glVertex2i(599,2);
+glVertex2i(599,399); glVertex2i(2,399);
+glEnd();
+
+glBegin(GL_LINES);
+glVertex2i(100,moveRaqDir + 190);
+glVertex2i(100,moveRaqDir + 240); 
+glVertex2i(500,moveRaqEsq + 190); 
+glVertex2i(500,moveRaqEsq + 240);
+
+glEnd();
+
+glPointSize(15.0);
+glBegin(GL_POINTS);
+glVertex2i(movebola+200,210);
+glEnd();
+
+glutSwapBuffers();
+}
+
+void keyboard(unsigned char key, int x, int y){
+	
+	switch (key) {
+	case 'w':
+		if(moveRaqDir<= 150) {
+		moveRaqDir += 10;
+} break;
+
+	case 's':
+		if(moveRaqDir<= 150) {
+		moveRaqDir -= 10;
+} break;
+	case 'i':
+		if(moveRaqEsq<= 150) {
+		moveRaqEsq += 10;
+} break;
+
+	case 'k':
+		if(moveRaqEsq<= 150) {
+		moveRaqEsq -= 10;
+} break;
+default:
+exit (0);
+}
+
+
+glutPostRedisplay();
+//glutTimerFunc(10,mouse, 1);
+
+}
+
+
+void bola(int passo){
+	
+	
+	if(direcao==1){
+	movebola += 3;
+
+		if(movebola>=290)
+			direcao =1;
+	}
+
+	else{
+	movebola -= 3;
+	if(movebola<=-90) {
+	direcao = 1;
+	}
+}
+
+glutPostRedisplay();
+glutTimerFunc(10,bola, 1);
+
+}
+
+
+int main(int argc, char** argv){
+glutInit(&argc, argv);
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+glutInitWindowSize (600, 400);
+glutInitWindowPosition (100, 100);
+glutCreateWindow ("Pong");
+init();
+glutDisplayFunc(display);
+glutTimerFunc(10,bola,1);
+glutKeyboardFunc(keyboard);
+//glutMouseFunc(mouse);
+glutMainLoop();
+return 0;
+}
