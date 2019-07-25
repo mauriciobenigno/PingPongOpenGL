@@ -9,5 +9,5 @@
  
  
  Tela do Jogo
- ![Alt Text](https://github.com/mauriciobenigno/PingPongOpenGL/raw/master/pong.png)
+ ![Alt Text](https://github.com/mauriciobenigno/PingPongOpenGL/blob/master/pong.jpg)
 
